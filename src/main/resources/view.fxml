@@ -9,7 +9,17 @@
 <VBox prefHeight="400.0" prefWidth="640.0"
       xmlns="http://javafx.com/javafx/20.0.1"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.andrew.javafx_uni.Controller">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
-  </children>
+  <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
+    <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="96.0" AnchorPane.leftAnchor="0.0">
+      <Menu mnemonicParsing="false" text="OS">
+        <MenuItem fx:id="infoOS" mnemonicParsing="false" text="OS info" />
+      </Menu>
+      <Menu mnemonicParsing="false" text="CPU">
+        <Menu mnemonicParsing="false" text="CPU Loading">
+          <MenuItem fx:id="infoCPU" mnemonicParsing="false" text="Information" />
+          <MenuItem fx:id="loadCPU" mnemonicParsing="false" text="CPU Loading" />
+        </Menu>
+      </Menu>
+    </MenuBar>
+  </AnchorPane>
 </VBox>
