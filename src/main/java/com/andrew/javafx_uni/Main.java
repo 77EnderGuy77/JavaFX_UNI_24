@@ -10,7 +10,11 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader root =  new FXMLLoader(getClass().getResource("/view.fxml"));
+        SystemInfo sysInfo = new SystemInfo();
+
+        Label OSlabel = new Label("OS: " + sysInfo.getOperatingSystem());
+        Label RAMlabel = new Label("RAM: " + sysInfo.getHardware().getMemory().getTotal());
+        Label CPUlable = new Label("CPU: " + sysInfo.getHardware().getProcessor());
 
         Scene scene = new Scene(root.load());
         stage.setResizable(true);
