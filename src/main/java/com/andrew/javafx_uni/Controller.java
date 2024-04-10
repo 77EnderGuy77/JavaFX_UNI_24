@@ -11,21 +11,24 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oshi.*;
 import oshi.hardware.CentralProcessor;
+import oshi.hardware.GlobalMemory;
 
 public class Controller {
     public long time = 0;
 
     private final SystemInfo systemInfo = new SystemInfo();
     private final CentralProcessor cpu = systemInfo.getHardware().getProcessor();
+    private final GlobalMemory ram = systemInfo.getHardware().getMemory();
 
     @FXML
-    private MenuItem infoOS, infoCPU, loadCPU;
+    private MenuItem infoOS, infoCPU, loadCPU, loadRAM;
 
     @FXML
     private void initialize(){
         infoOS.setOnAction(e -> showInfoOS());
         infoCPU.setOnAction(e -> showInfoCPU());
-        loadCPU.setOnAction(e -> openGraph());
+        loadCPU.setOnAction(e -> openGraphCPU());
+        loadRAM.setOnAction(e -> openGraphRAM());
     }
 
     private void showInfoOS(){
@@ -46,7 +49,7 @@ public class Controller {
         alert.showAndWait();
     }
 
-    private void openGraph() {
+    private void openGraphCPU() {
         Stage secondStage = new Stage();
 
         NumberAxis xAxis = new NumberAxis();
@@ -97,5 +100,63 @@ public class Controller {
         secondStage.setScene(scene);
         secondStage.setTitle("CPU Load Graph");
         secondStage.show();
+    }
+
+    private void openGraphRAM(){
+        Stage secondStage = new Stage();
+
+        long totalRAM = ram.getTotal();
+        long availRAM = ram.getAvailable();
+        long usedRAM = totalRAM - availRAM;
+
+        NumberAxis xAxis = new NumberAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Time (seconds)");
+        yAxis.setLabel("RAM Load (%)");
+
+        xAxis.setTickUnit(1);
+        xAxis.setLowerBound(0);
+        xAxis.setForceZeroInRange(false);
+
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(byteToGig(totalRAM));
+
+        LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+        lineChart.setTitle("RAM Load Graph");
+
+        // Create series for the chart
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("RAM Load");
+
+        Scene scene = new Scene(lineChart, 600, 400);
+
+
+        Thread updateThread = new Thread(() -> {
+            while (true) {
+                double ramLoad = (byteToGig(usedRAM));
+                Platform.runLater(() -> {
+                    series.getData().add(new XYChart.Data<>(time, ramLoad));
+                    time++;
+                });
+                try {
+                    Thread.sleep(1000); // Update every second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        updateThread.setDaemon(true);
+        updateThread.start();
+
+        lineChart.getData().add(series);
+
+        secondStage.setScene(scene);
+        secondStage.setTitle("RAM Load Graph");
+        secondStage.show();
+    }
+
+    private double byteToGig(long bytes){
+        return bytes / (1024.0 * 1024.0 * 1024.0);
     }
 }
