@@ -10,10 +10,10 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader root =  new FXMLLoader(getClass().getResource("view.fxml"));
+        FXMLLoader root =  new FXMLLoader(getClass().getResource("/view.fxml"));
 
         Scene scene = new Scene(root.load());
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setTitle("Laba 3");
         stage.setScene(scene);
         stage.show();
