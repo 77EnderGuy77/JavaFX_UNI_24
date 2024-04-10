@@ -14,7 +14,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root.load());
         stage.setResizable(true);
-        stage.setTitle("Laba 4");
+        stage.setTitle("Laba 5");
         stage.setScene(scene);
         stage.show();
     }

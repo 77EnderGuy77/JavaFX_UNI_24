@@ -8,7 +8,7 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.andrew.javafx_uni.Controller">
   <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
-    <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="148.0" AnchorPane.leftAnchor="0.0">
+    <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="211.0" AnchorPane.leftAnchor="0.0">
       <Menu mnemonicParsing="false" text="OS">
         <MenuItem fx:id="infoOS" mnemonicParsing="false" text="OS info" />
       </Menu>
@@ -20,6 +20,9 @@
       </Menu>
       <Menu mnemonicParsing="false" text="RAM">
         <MenuItem fx:id="loadRAM" mnemonicParsing="false" text="RAM Load" />
+      </Menu>
+      <Menu mnemonicParsing="false" text="Processes">
+        <MenuItem fx:id="showProc" mnemonicParsing="false" text="Show Processes" />
       </Menu>
     </MenuBar>
   </AnchorPane>
